@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="500sp"
+            android:src="@drawable/background1"
+            android:scaleType="fitXY"
+            android:id="@+id/imageView" />
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="110dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/home"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:text="智居"
+            android:textSize="23sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="185dp"
+            android:layout_marginRight="30dp" />
+        <TextView
+            android:text="智生活居先行"
+            android:textSize="15sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="55dp"
+            android:layout_marginLeft="165dp"
+            android:layout_marginRight="30dp" />
+
+    </RelativeLayout>
+    <!--显示版本号-->
+      <!--  <TextView
+            android:text="版本号："
+
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:layout_width="96dp"
+            android:layout_height="34dp"
+            android:layout_marginRight="48dp"
+            android:layout_marginEnd="90dp"
+            android:id="@+id/tv_splash_version"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />-->
+    </LinearLayout>
