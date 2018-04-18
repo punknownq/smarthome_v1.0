@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,12 +29,15 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.suke.widget.SwitchButton;
 import com.wang.R;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
 
 /**
  * Created by jpeng on 16-11-14.
@@ -56,6 +61,8 @@ public class Tab1Pager extends Fragment implements View.OnClickListener, TextWat
     private LinearLayout Tab1step0;
     private LinearLayout Tab1step1;
     private LinearLayout Tab1step2;
+    /*声明登录所用URL*/
+    private static final String url = "lightController";
 
 
     @Override
@@ -79,7 +86,6 @@ public class Tab1Pager extends Fragment implements View.OnClickListener, TextWat
         Tab1step1=layout.findViewById(R.id.Tab1_step1);
         Tab1step2=layout.findViewById(R.id.Tab1_step2);
         com.suke.widget.SwitchButton switchButton = layout.findViewById(R.id.switch_button);
-
         RefreshLayout refreshLayout = (RefreshLayout)layout.findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -94,25 +100,7 @@ public class Tab1Pager extends Fragment implements View.OnClickListener, TextWat
             }
         });
 
-         /*这是第三个界面的按钮*/
-        switchButton.setChecked(false);
-        switchButton.isChecked();
-        switchButton.toggle();     //switch state
-        //switchButton.toggle(false);//switch without animation
-        switchButton.setShadowEffect(true);//disable shadow effect
-        switchButton.setEnabled(true);//disable button
-        switchButton.setEnableEffect(true);//disable the switch animation
-        switchButton.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
-                //TODO do your job
-                if(isChecked==true){
-                    Toast.makeText(getActivity(),"true click.",Toast.LENGTH_SHORT).show();
-                }
-                else
-                    Toast.makeText(getActivity(),"false click.",Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
 
         add0.setOnClickListener(new View.OnClickListener() {
@@ -183,6 +171,77 @@ public class Tab1Pager extends Fragment implements View.OnClickListener, TextWat
                 animatorleft.setTarget(Tab1step1);
                 animatorleft.start();
 
+            }
+        });
+
+          /*这是第三个界面的按钮*/
+        switchButton.setChecked(false);
+        switchButton.isChecked();
+        switchButton.toggle();     //switch state
+        //switchButton.toggle(false);//switch without animation
+        switchButton.setShadowEffect(true);//disable shadow effect
+        switchButton.setEnabled(true);//disable button
+        switchButton.setEnableEffect(true);//disable the switch animation
+        switchButton.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+                //TODO do your job
+                if(isChecked==true){
+                    Toast.makeText(getActivity(),"true click.",Toast.LENGTH_SHORT).show();
+                    OkHttpUtils
+                            .post()
+                            .url(getResources().getString(R.string.BaseURL)+url)
+                            .addParams("macAddress","CONN_LED1")
+                            .addParams("status","1")
+                            .build()
+                            .execute(new StringCallback() {
+                                @Override
+                                public void onError(Call call, Exception e, int id) {
+
+                                }
+
+                                @Override
+                                public void onResponse(String response, int id) {
+                                    int str = Integer.parseInt(response);
+                                    Log.i("lightText", str+"");
+                                    /*将Message送到Handler进行UI更新*/
+                                    if(str==1) {
+                                        Toast.makeText(getActivity(),"success!",Toast.LENGTH_SHORT).show();
+                                    }
+                                    else{
+                                        Toast.makeText(getActivity(),"false!",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                }
+                else
+                {
+                    OkHttpUtils
+                            .post()
+                            .url(getResources().getString(R.string.BaseURL)+url)
+                            .addParams("macAddress","CONN_LED1")
+                            .addParams("status","0")
+                            .build()
+                            .execute(new StringCallback() {
+                                @Override
+                                public void onError(Call call, Exception e, int id) {
+
+                                }
+
+                                @Override
+                                public void onResponse(String response, int id) {
+                                    int str = Integer.parseInt(response);
+                                    Log.i("lightText", str+"");
+                                    /*将Message送到Handler进行UI更新*/
+                                    if(str==1) {
+                                        Toast.makeText(getActivity(),"success!",Toast.LENGTH_SHORT).show();
+                                    }
+                                    else{
+                                        Toast.makeText(getActivity(),"false!",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                }
             }
         });
 

@@ -16,5 +16,6 @@
     <string name="tab2">商城</string>
     <string name="tab3">消息</string>
     <string name="tab4">个人 </string>
+    <string name="BaseURL">http://192.168.1.5:8080/</string>
     <string name="title_activity_menu">MenuActivity</string>
 </resources>

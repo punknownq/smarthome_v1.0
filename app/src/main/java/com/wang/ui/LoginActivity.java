@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     private final static String SIGNIN_TAG = "Signin ===> ";
 
     /*声明登录所用URL*/
-    private static final String url = "http://16n39847j2.51mypc.cn:16129/androidLoginValide";
+    private static final String url ="androidLoginValide";
    // private static String baseUrl;
     /*绑定控件*/
     @BindView(R.id.et_username)
@@ -167,53 +167,49 @@ public class LoginActivity extends AppCompatActivity {
                     Message msg = new Message();
                     msg.what = 2;
                     ltHandler.sendMessage(msg);
+                    OkHttpUtils
+                            .post()
+                            .url(getResources().getString(R.string.BaseURL)+url)
+                            .addParams("userName", etUsername.getText().toString())
+                            .addParams("passWord", etPassword.getText().toString())
+                            .build()
+                            .execute(new StringCallback() {
+                                @Override
+                                public void onError(Call call, Exception e, int id) {
 
-                   Message msg1 = new Message();
-                    msg1.what = 0;
-                    ltHandler.sendMessage(msg1);
-//                    OkHttpUtils
-//                            .post()
-//                            .url(url)
-//                            .addParams("username", etUsername.getText().toString())
-//                            .addParams("password", etPassword.getText().toString())
-//                            .build()
-//                            .execute(new StringCallback() {
-//                                @Override
-//                                public void onError(Call call, Exception e, int id) {
-//
-//                                }
-//
-//                                @Override
-//                                public void onResponse(String response, int id) {
-//                                    int str = Integer.parseInt(response);
-//                                    Log.i("long", str+"");
-//
-//                                    Log.i("boolean_context", "success");
-//                                    /*将Message送到Handler进行UI更新*/
-//                                    if(str==1) {
-//                                        runOnUiThread(new Runnable() {
-//                                            @Override
-//                                            public void run() {
-//                                                Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
-//                                            }
-//                                        });
-//                                        Message msg = new Message();
-//                                        msg.what = 0;
-//                                        ltHandler.sendMessage(msg);
-//                                    }
-//                                    else{
-//                                        runOnUiThread(new Runnable() {
-//                                            @Override
-//                                            public void run() {
-//                                                Toast.makeText(getApplicationContext(), "用户名或密码错误", Toast.LENGTH_SHORT).show();
-//                                            }
-//                                        });
-//                                        Message msg = new Message();
-//                                        msg.what = 1;
-//                                        ltHandler.sendMessage(msg);
-//                                    }
-//                                }
-//                            });
+                                }
+
+                                @Override
+                                public void onResponse(String response, int id) {
+                                    int str = Integer.parseInt(response);
+                                    Log.i("long", str+"");
+
+                                    Log.i("boolean_context", "success");
+                                    /*将Message送到Handler进行UI更新*/
+                                    if(str==1) {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                        Message msg = new Message();
+                                        msg.what = 0;
+                                        ltHandler.sendMessage(msg);
+                                    }
+                                    else{
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(getApplicationContext(), "用户名或密码错误", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                        Message msg = new Message();
+                                        msg.what = 1;
+                                        ltHandler.sendMessage(msg);
+                                    }
+                                }
+                            });
                    }
                 break;
             case R.id.register_button:
