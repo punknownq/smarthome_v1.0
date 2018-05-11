@@ -1,6 +1,10 @@
 package com.wang.ui;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,12 +14,16 @@ import android.widget.Toast;
 import com.jpeng.jptabbar.BadgeDismissListener;
 import com.jpeng.jptabbar.JPTabBar;
 import com.jpeng.jptabbar.OnTabSelectListener;
+import com.jpeng.jptabbar.animate.AnimationType;
 import com.jpeng.jptabbar.anno.NorIcons;
 import com.jpeng.jptabbar.anno.SeleIcons;
 import com.jpeng.jptabbar.anno.Titles;
 import com.wang.R;
+import com.wang.service.MinaService;
+import com.wang.util.HttpAsyncTask;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -51,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements BadgeDismissListe
 
     private Tab4Pager mTab4;
 
+    private Intent serviceIntent;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,10 +83,16 @@ public class MainActivity extends AppCompatActivity implements BadgeDismissListe
         list.add(mTab2);
         list.add(mTab3);
         list.add(mTab4);
+        //开启长连接服务
+        serviceIntent = new Intent(this, MinaService.class);
+        startService(serviceIntent);
+
+
 
         mPager.setAdapter(new Adapter(getSupportFragmentManager(), list));
         mTabbar.setContainer(mPager);
         mTabbar.setPageAnimateEnable(false);
+        mTabbar.setAnimation(AnimationType.SCALE2);
         //设置Badge消失的代理
         mTabbar.setDismissListener(this);
         mTabbar.setTabListener(this);
@@ -84,7 +101,15 @@ public class MainActivity extends AppCompatActivity implements BadgeDismissListe
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(MainActivity.this, "中间点击", Toast.LENGTH_SHORT).show();
-                    ;
+                    PackageManager packageManager = getPackageManager();
+                    Intent intent;
+                    intent = packageManager.getLaunchIntentForPackage("com.wang.ar1");
+                    if (intent == null) {
+                        Toast.makeText(MainActivity.this, "未安装", Toast.LENGTH_LONG).show();
+                    } else {
+                        startActivity(intent);
+                    }
+
                 }
             });
     }
@@ -97,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements BadgeDismissListe
 
     @Override
     public void onTabSelect(int index) {
-        Toast.makeText(MainActivity.this, "choose the tab index is " + index, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(MainActivity.this, "choose the tab index is " + index, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -108,10 +133,19 @@ public class MainActivity extends AppCompatActivity implements BadgeDismissListe
 //        }
         return false;
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //退出时关掉长连接服务
+        stopService(serviceIntent);
+    }
+
+
 
     public JPTabBar getTabbar() {
         return mTabbar;
     }
+
 
 
 }

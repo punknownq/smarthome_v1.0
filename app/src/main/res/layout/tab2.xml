@@ -1,53 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:padding="15dp"
-              android:orientation="vertical"
-              android:layout_height="match_parent">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:padding="15dp"
+android:orientation="vertical"
+android:layout_height="match_parent">
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:padding="15dp"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+    android:layout_width="match_parent"
+    android:layout_height="170dp"
+    android:src="@drawable/tab2_light"
+    android:scaleType="fitXY"
+    android:id="@+id/iv_loginpage" />
+
+    <LinearLayout
+    android:id="@+id/Tab1_step20"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="15dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="选择的动画类型"
-        android:layout_marginBottom="10dp"
-        android:textSize="19sp"
-        android:id="@+id/textView"/>
+    android:layout_width="wrap_content"
+    android:layout_height="36dp"
+    android:layout_marginLeft="0dp"
+    android:text="@string/tab2Text0"
+    android:textSize="25dp"
+    android:id="@+id/textView" />
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+    <View
+    android:layout_width="0dp"
+    android:layout_height="1dp"
+    android:layout_weight="1" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="缩放"
-            android:checked="true"
-            android:id="@+id/radioButton1"/>
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="缩放2"
-            android:checked="true"
-            android:id="@+id/radioButton2"/>
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="跳跃"
+    <com.suke.widget.SwitchButton
+    android:id="@+id/switch_button0"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
 
+    app:sb_checked="true" />
 
-            android:id="@+id/radioButton3"/>
-        <RadioButton
-            android:layout_width="wrap_content"
+    </LinearLayout>
+        <Button
+            android:id="@+id/register_button"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="翻转"
-            android:id="@+id/radioButton4"/>
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="旋转"
-            android:id="@+id/radioButton5"/>
-    </RadioGroup>
+            android:text="@string/action_setSmart0"
+            android:paddingTop="15dp"
+            android:gravity="right"
+            android:textStyle="normal"
+            android:background="#00000000"/>
+
+    </LinearLayout>
+
 
 </LinearLayout>

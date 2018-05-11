@@ -51,14 +51,17 @@ public class RegisterActivity extends AppCompatActivity {
     private final static String REGISETR_TAG = "Register ===> ";
 
     /*注册所用URL*/
-    private static final String url = "http://16n39847j2.51mypc.cn:16129/register";
-    private static final String urlText = "http://192.168.1.11:8080/userNameValide";
+    private static final String url = "register";
+    private static final String urlText = "userNameValide";
+    private static final String url_email = "emailBinding";
     @BindView(R.id.et_re_username)
     EditText etReUsername;
     @BindView(R.id.et_re_password)
     EditText etRePassword;
     @BindView(R.id.et_re_email)
     EditText etReEmail;
+    @BindView(R.id.et_re_number)
+    EditText etReNumber;
     @BindView(R.id.register_button0)
     Button registerButton0;
     @BindView(R.id.register_step0)
@@ -71,6 +74,8 @@ public class RegisterActivity extends AppCompatActivity {
     Button registerButton2;
     @BindView(R.id.register_step2)
     LinearLayout registerStep2;
+
+
 
     private Handler ltHandler;
     private String user_unused;
@@ -161,7 +166,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     OkHttpUtils
                             .post()
-                            .url(urlText)
+                            .url(getResources().getString(R.string.BaseURL)+urlText)
                             .addParams("userName", etReUsername.getText().toString())
                             .build()
                             .execute(new StringCallback() {
@@ -174,7 +179,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 public void onResponse(String response, int id) {
                                     user_unused = response;
                                     Log.i("usertest", response);
-                                    if (response.equals(R.string.SUCCESS)) {
+                                    if (!response.equals(R.string.SUCCESS)) {
 
                                     } else {
 
@@ -214,52 +219,9 @@ public class RegisterActivity extends AppCompatActivity {
                         lt.show();
                         break;
                     }
-                }
-            }
-        };
-    }
-    /*点击事件*/
-    @OnClick({R.id.register_button0,R.id.register_button1,R.id.register_button2})
-    public void OnClick(View view) {
-        switch (view.getId()) {
-            case R.id.register_button0:
-//                final checkEmail checkemail = new checkEmail();
-//                if (!getResources().getString(R.string.SUCCESS).equals(user_unused)) {
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Toast.makeText(getApplicationContext(), "用户名重复，请重新注册", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                    Message msg = new Message();
-//                    msg.what = 1;
-//                    ltHandler.sendMessage(msg);
-//                } else if (checkemail.checkEmail(etRePassword.getText().toString())) {
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Toast.makeText(getApplicationContext(), "邮箱格式错误，请重新注册", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                    Message msg = new Message();
-//                    msg.what = 1;
-//                    ltHandler.sendMessage(msg);
-//                } else {
-//                    if (TextUtils.isEmpty(etReUsername.getText())) {
-//                        etReUsername.setError("请输入用户名");
-//                    } else if (TextUtils.isEmpty(etRePassword.getText())) {
-//                        etRePassword.setError("请输入密码");
-//                    } else if (TextUtils.isEmpty(etReEmail.getText())) {
-//                        etReEmail.setError("请输入邮箱");
-//                    } else {
-//                        Log.i(REGISETR_TAG, "用户确认并提交了信息");
-//                    /*将Message送到Handler进行UI更新*/
-//                        Message msg = new Message();
-//                        msg.what = 2;
-//                        ltHandler.sendMessage(msg);
-//                        /*与服务器通讯，验证*/
-//                        post();
-                        /*滑动效果，到下一个页面*/
+                    case 3:{
+                        lt.success();
+                         /*滑动效果，到下一个页面*/
                         Animator animatorleft = AnimatorInflater.loadAnimator(RegisterActivity.this, R.animator.animator_register_stepleftexit);
                         animatorleft.setTarget(registerStep0);
                         animatorleft.start();
@@ -273,24 +235,110 @@ public class RegisterActivity extends AppCompatActivity {
                         Animator animatorright = AnimatorInflater.loadAnimator(RegisterActivity.this, R.animator.animator_register_steprightenter);
                         animatorright.setTarget(registerStep1);
                         animatorright.start();
-//                    }
-//                }
+                        break;
+                    }
+                    case 4:{
+                        lt.success();
+                          /*滑动效果，到下一个页面*/
+                        Animator animatorleft = AnimatorInflater.loadAnimator(RegisterActivity.this, R.animator.animator_register_stepleftexit);
+                        animatorleft.setTarget(registerStep1);
+                        animatorleft.start();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                registerStep1.setVisibility(View.GONE);
+                            }
+                        }, 500);
+                        registerStep2.setVisibility(View.VISIBLE);
+                        Animator animatorright = AnimatorInflater.loadAnimator(RegisterActivity.this, R.animator.animator_register_steprightenter);
+                        animatorright.setTarget(registerStep2);
+                        animatorright.start();
+                        break;
+                    }
+                }
+            }
+        };
+    }
+    /*点击事件*/
+    @OnClick({R.id.register_button0,R.id.register_button1,R.id.register_button2})
+    public void OnClick(View view) {
+        switch (view.getId()) {
+            case R.id.register_button0:
+                final checkEmail checkemail = new checkEmail();
+                if (!getResources().getString(R.string.SUCCESS).equals(user_unused)) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "信息有误，请重新注册", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    Message msg = new Message();
+                    msg.what = 1;
+                    ltHandler.sendMessage(msg);
+                } else if (checkemail.checkEmail(etRePassword.getText().toString())) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "邮箱格式错误，请重新注册", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    Message msg = new Message();
+                    msg.what = 1;
+                    ltHandler.sendMessage(msg);
+                } else {
+                    if (TextUtils.isEmpty(etReUsername.getText())) {
+                        etReUsername.setError("请输入用户名");
+                    } else if (TextUtils.isEmpty(etRePassword.getText())) {
+                        etRePassword.setError("请输入密码");
+                    } else if (TextUtils.isEmpty(etReEmail.getText())) {
+                        etReEmail.setError("请输入邮箱");
+                    } else {
+                        Log.i(REGISETR_TAG, "用户确认并提交了信息");
+                    /*将Message送到Handler进行UI更新*/
+                        Message msg = new Message();
+                        msg.what = 2;
+                        ltHandler.sendMessage(msg);
+                        /*与服务器通讯，验证*/
+                        post();
+
+                    }
+                }
                 break;
             case R.id.register_button1:
-                /*滑动效果，到下一个页面*/
-                Animator animatorleft1 = AnimatorInflater.loadAnimator(RegisterActivity.this, R.animator.animator_register_stepleftexit);
-                animatorleft1.setTarget(registerStep1);
-                animatorleft1.start();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        registerStep1.setVisibility(View.GONE);
-                    }
-                }, 500);
-                registerStep2.setVisibility(View.VISIBLE);
-                Animator animatorright1 = AnimatorInflater.loadAnimator(RegisterActivity.this, R.animator.animator_register_steprightenter);
-                animatorright1.setTarget(registerStep2);
-                animatorright1.start();
+                OkHttpUtils
+                        .post()
+                        .url(getResources().getString(R.string.BaseURL)+url_email)
+                        .addParams("vcode", etReNumber.getText().toString())
+                        .addParams("userName",etReUsername.getText().toString())
+                        .build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+
+                            }
+
+                            @Override
+                            public void onResponse(String response, int id) {
+                                user_unused = response;
+                                Log.i("usertest", response);
+                                if (response.equals("1")) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(), "验证成功!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    Message msg = new Message();
+                                    msg.what = 4;
+                                    ltHandler.sendMessage(msg);
+
+                                } else {
+
+                                    etReUsername.setError("验证码输入错误!");
+                                }
+
+                            }
+                        });
                 break;
             case R.id.register_button2:
                 Message msg = new Message();
@@ -319,7 +367,7 @@ public class RegisterActivity extends AppCompatActivity {
                 , json);
 
         Request request = new Request.Builder()
-                .url(url)//请求的url
+                .url(getResources().getString(R.string.BaseURL)+url)//请求的url
                 .post(requestBody)
                 .build();
 
@@ -341,22 +389,22 @@ public class RegisterActivity extends AppCompatActivity {
                 //int str = Integer.parseInt(string);
                 Log.i("tian", string);
                 Log.i("boolean_context", "success");
-                                    /*将Message送到Handler进行UI更新*/
+                /*将Message送到Handler进行UI更新*/
                 if (string.equals(success)) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(), "请验证邮箱", Toast.LENGTH_SHORT).show();
+                            Message msg = new Message();
+                            msg.what = 3;
+                            ltHandler.sendMessage(msg);
                         }
                     });
-//                    Message msg = new Message();
-//                    msg.what = 0;
-//                    ltHandler.sendMessage(msg);
                 } else {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getApplicationContext(), "注册失败，请重新注册", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "邮箱已被注册，请重新注册", Toast.LENGTH_SHORT).show();
                         }
                     });
                     Message msg = new Message();

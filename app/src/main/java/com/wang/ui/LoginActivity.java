@@ -89,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                     case 0: {
                         lt.success();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.putExtra("userName",etUsername.getText().toString());
                         startActivity(intent);
                         break;
                     }
@@ -211,6 +212,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             });
                    }
+
                 break;
             case R.id.register_button:
                 /*启动RegisterActivity*/

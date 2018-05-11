@@ -40,24 +40,43 @@
 
             <Button
                 android:id="@+id/id_delete0"
-                android:layout_width="36dp"
+                android:layout_width="72dp"
                 android:layout_height="36dp"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/ic_menu_delete" />
+                android:text="多选"
+                android:drawableLeft="@drawable/drable_delete"
+
+                android:background="@android:color/transparent"
+                android:visibility="visible"/>
+            <Button
+                android:id="@+id/id_check0"
+                android:layout_width="72dp"
+                android:layout_height="36dp"
+                android:layout_alignParentRight="true"
+                android:text="完成"
+                android:background="@android:color/transparent"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/id_add0"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_toLeftOf="@id/id_delete0"
+                android:layout_marginLeft="230dp"
 
                 android:background="@drawable/ic_menu_add" />
         </RelativeLayout>
-
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/id_recyclerView0"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+       </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -145,12 +164,13 @@
                 android:layout_height="36dp"
                 android:gravity="center"
                 android:text="@string/tab1Title2"
-                android:textSize="25dp" />
+                android:textSize="25dp"
+                android:id="@+id/itemName"/>
 
         </RelativeLayout>
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/refreshLayout"
+            android:id="@+id/refreshLayout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <com.scwang.smartrefresh.layout.header.ClassicsHeader
@@ -179,8 +199,7 @@
                     android:id="@+id/switch_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    app:sb_checked="true" />
+                    app:sb_checked="false" />
             </LinearLayout>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

@@ -5,66 +5,30 @@
               android:orientation="vertical"
               android:layout_height="match_parent">
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+       android:gravity="center"
+        android:text="@string/tab2Title0"
+        android:textSize="25dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="是否禁用页面滑动动画"
-            android:gravity="center"
-            android:layout_margin="10dp"
-           />
 
-        <RadioGroup
-            android:id="@+id/radioGroup1"
+</RelativeLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="打开"
-
-                android:id="@+id/radioButton1"/>
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="关闭"
-                android:id="@+id/radioButton2"/>
-        </RadioGroup>
-
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="是否禁用图标和标题渐变"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            android:id="@+id/textView2"/>
-
-        <RadioGroup
-            android:id="@+id/radioGroup2"
+            android:layout_height="wrap_content"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/id_recyclerView2"
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="打开"
-                android:id="@+id/radioButton3"/>
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="关闭"
-                android:id="@+id/radioButton4"/>
-        </RadioGroup>
-
+            android:layout_height="match_parent" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

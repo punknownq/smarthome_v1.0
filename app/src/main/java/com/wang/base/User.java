@@ -1,5 +1,8 @@
 package com.wang.base;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by 28724 on 2018/3/27.
  */
@@ -8,17 +11,21 @@ public class User {
 
         private String userName;
         private String passWord;
-        private String familyName;
+        private String email;
+        private ArrayList<String> room;
 
-    public User(String username, String password, String familyname) {
+    public User(String username, String password, String email) {
         this.userName=username;
         this.passWord=password;
-        this.familyName=familyname;
+        this.email=email;
     }
 
 
     public User(String userName) {
         this.userName = userName;
+    }
+    public User(ArrayList<String> room) {
+        this.room = room;
     }
 
     public User() {
@@ -44,16 +51,24 @@ public class User {
             this.passWord = password;
         }
 
-        public String getFamilyname(){
+        public String getEmail(){
 
-            return familyName;
+            return email;
         }
 
-        public void setFamilyname(String familyname){
+        public void setEmail(String email){
 
-            this.familyName = familyname;
+            this.email = email;
         }
+         public List getRoom(){
 
+             return room;
+    }
+
+         public void setRoom(ArrayList<String> room){
+
+              this.room = room;
+    }
     }
 
 

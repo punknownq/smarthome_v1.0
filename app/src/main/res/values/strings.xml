@@ -13,9 +13,16 @@
     <string name="tab1Title1">设 备</string>
     <string name="tab1Title2">设备名称</string>
     <string name="tab1Text">设备开关状态</string>
-    <string name="tab2">商城</string>
+    <string name="tab2Text0">开启预设模式</string>
+    <string name="action_setSmart0">智能模式设置>></string>
+    <string name="tab2Title0">消息推送</string>
+    <string name="tab2">智能</string>
     <string name="tab3">消息</string>
     <string name="tab4">个人 </string>
-    <string name="BaseURL">http://192.168.1.5:8080/</string>
+    <string name="BaseURL">http://192.168.2.122:8080/</string>
+    <string name="BaseIP">192.168.2.122</string>
     <string name="title_activity_menu">MenuActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
